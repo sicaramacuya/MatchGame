@@ -8,6 +8,32 @@
 import Foundation
 
 
+/*
+ 
+1. Display Start button - GameState.start
+     Tap start button -> GameState.ready
+       Start Timer
+       Choose random colors
+       set GameState.playing
+
+2. Shows the color labels and Yes No buttons - GameState.playing
+     tap Yes or No
+       check answer
+         stop timer
+         update score
+         update streak
+         update wins
+         set GameState.over
+ 
+3. Show the results - GameState.over
+     start a timer
+       On Timer
+       set GameState.playing
+ 
+ */
+
+
+
 // Game Controller
 class GameController: ObservableObject {
   // These variables are shared with the view
@@ -120,24 +146,3 @@ class GameController: ObservableObject {
     seconds = "\(ms / 10):0\(ms % 10)"
   }
 }
-
-/*
- 
- 
-Press Start
- choose colorA and colorB
- display colors
- Start timer
-Press Yes or No
-Was that the correct answer? colorA == colorB
-  Yes -> update score + 10, update streak + 1
-  No -> Update Score - 10, update streak - 1
-Display results
- show check or x
- short pause
-start game over
- choose new colors
- display colors
- Reset timer
- 
- */
