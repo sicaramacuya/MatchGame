@@ -1,3 +1,3 @@
 # MatchGame
 
-Sample iOS color matching game. 
+Sample iOS color matching game.
