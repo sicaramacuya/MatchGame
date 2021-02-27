@@ -38,7 +38,7 @@ import Foundation
  TODO: The colors are sometimes hard to read for example yellow
  TODO: The frequancy of a Yes answer might need some consideration. Currently the
     colors are randomly chosen. This means that match is about 1 in 6. Might be
-    more challenging if matches were more like 1 in 2. 
+    more challenging if matches were more like 1 in 2.
  
  */
 
@@ -121,8 +121,7 @@ class GameController: ObservableObject {
       streak = 0    // reset that streak
     }
     // Select some new colors
-    // TODO: go to the ready state, start a count down or delay before shwoing the next colors
-//    chooseColors()
+    // TODO: go to the ready state, start a count down or delay before showing the next colors
     
     gameOver()
     

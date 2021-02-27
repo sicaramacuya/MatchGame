@@ -162,6 +162,8 @@ Internally GameController holds three colors: colorA (color and the text in the 
 
 The odds of a Yes being correct is about 1 in 6. This makes No the most common answer. The game might be more interesting if the odds of a correct answer were 1 in 2. This might be an interesting experiment. 
 
+With the current implementation there is not way to exit the game after starting. This is on the TODO list below. 
+
 ## TODO
 
 This app is not finished it needs some work. Here is a list of areas that could be improved. 
@@ -175,3 +177,4 @@ This app is not finished it needs some work. Here is a list of areas that could 
 - TODO: The frequancy of a Yes answer might need some consideration. Currently the
    colors are randomly chosen. This means that match is about 1 in 6. Might be
    more challenging if matches were more like 1 in 2.
+  - TODO: Add a count down 1, 2, 3 before starting the game. 
