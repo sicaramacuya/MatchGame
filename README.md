@@ -139,3 +139,39 @@ Timers are used by the app to track the time it takes to play a game, and track 
 Read more about [Timer](https://developer.apple.com/documentation/foundation/timer)
 
 
+## Game Play
+
+I'm using the the term "game" here to represent one session of play. This would include displaying the colors and color word labels, starting the timer, waiting for a a Yes or No input. Tapping Yes or No ends the game and displays the results. 
+
+In this implementation the results are displayed for 1 second before a new game is started. 
+
+A correct answer is: Yes when the color name at the top matches the actual color of the text below or No when they don't match. For each correct answer the score increases by 100 and for each incorrect answer the score decreases by 100. 
+
+A streak represents how many correct answers were provided in a row. When an incorrect answer occurs the streak is reset to 0. 
+
+Currently colors are chosen from a list of 6: 
+
+1. Red
+2. Orange
+3. Yellow
+4. Green 
+5. Blue
+6. Purple
+
+Internally GameController holds three colors: colorA (color and the text in the upper label), colorB (text of the lower label), and colorC (color of thelower label). When a game begins colors are assigned assigned randomly to each from the list. Yes is the correct answer when colorA and colorC match.
+
+The odds of a Yes being correct is about 1 in 6. This makes No the most common answer. The game might be more interesting if the odds of a correct answer were 1 in 2. This might be an interesting experiment. 
+
+## TODO
+
+This app is not finished it needs some work. Here is a list of areas that could be improved. 
+
+- TODO: Add some motion! SwiftUI supports animation. Need to research this! 
+- TODO: The center block shifts down when the buttons are removed. Might use a Spacer here
+- TODO: Time might be better as 00:0 or 00:00 this means the timer needs to run 0.01
+- TODO: Buttons are only active when you tap the text, make the tapable area larger
+- TODO: Need a way to exit game. Add another button? Add a play again button?
+- TODO: The colors are sometimes hard to read for example yellow
+- TODO: The frequancy of a Yes answer might need some consideration. Currently the
+   colors are randomly chosen. This means that match is about 1 in 6. Might be
+   more challenging if matches were more like 1 in 2.
