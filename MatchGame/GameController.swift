@@ -31,11 +31,14 @@ import Foundation
        set GameState.playing
  
  
- TODO: This is a pretty confusing game check that it's getting the answers right!
- TODO: The center block shifts down when the buttons are removed
+ TODO: The center block shifts down when the buttons are removed. Might use a Spacer here
  TODO: Time might be better as 00:0 or 00:00 this means the timer needs to run 0.01
  TODO: Buttons are only active when you tap the text, make the tapable area larger
  TODO: Need a way to exit game. Add another button? Add a play again button?
+ TODO: The colors are sometimes hard to read for example yellow
+ TODO: The frequancy of a Yes answer might need some consideration. Currently the
+    colors are randomly chosen. This means that match is about 1 in 6. Might be
+    more challenging if matches were more like 1 in 2. 
  
  */
 
