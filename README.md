@@ -177,4 +177,4 @@ This app is not finished it needs some work. Here is a list of areas that could 
 - TODO: The frequancy of a Yes answer might need some consideration. Currently the
    colors are randomly chosen. This means that match is about 1 in 6. Might be
    more challenging if matches were more like 1 in 2.
-  - TODO: Add a count down 1, 2, 3 before starting the game. 
+- TODO: Add a count down 1, 2, 3 before starting the game. 
