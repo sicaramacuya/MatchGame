@@ -14,28 +14,16 @@ struct ContentView: View {
     
     // Wrapper
     ZStack {
-      // Background Color
+      // Background Color field
       Color(hue: 0.473, saturation: 0.03, brightness: 0.3)
         .ignoresSafeArea()
+      
       // Main Container
       VStack {
         // Top row
-        HStack {
-          // Score
-          Text("Score: \(env.score)")
-            .frame(maxWidth: .infinity)
-            .padding(5)
-          // Time
-          Text("\(env.seconds)")
-            .frame(maxWidth: .infinity)
-            .padding(5)
-          // Steak
-          Text("Streak: 0")
-            .frame(maxWidth: .infinity)
-            .padding(5)
-        }
+        scoreDisplay()
         
-        Spacer()
+        Spacer() // -------
         
         // Center color labels
         ZStack {
@@ -43,7 +31,7 @@ struct ContentView: View {
           resultsDisplay()
         }
         
-        Spacer()
+        Spacer() // -------
         
         // Button/s at the bottom
         buttonBlock()
@@ -51,17 +39,46 @@ struct ContentView: View {
     }
   }
   
-  // TODO: Move that top row in here...
-  func scoreDisplay() {
-    
+  
+  
+  // ----------------------------------------
+  // Display the top row with score and timer
+  
+  func scoreDisplay() -> AnyView {
+    return AnyView(
+      HStack {
+        // Score
+        Text("Score: \(env.score)")
+          .frame(maxWidth: .infinity)
+          .padding(5)
+          .foregroundColor(.white)
+        // Time
+        Text("\(env.seconds)")
+          .frame(maxWidth: .infinity)
+          .padding(5)
+          .foregroundColor(.white)
+        // Steak
+        Text("Streak: \(env.streak)")
+          .frame(maxWidth: .infinity)
+          .padding(5)
+          .foregroundColor(.white)
+      }
+    )
   }
   
   
+  
+  // --------------------------------------
   // Display Colors in center
+  
   func colorDisplay() -> AnyView {
     // Display some text that says Start
     if env.gameState == .start {
-      return AnyView(Text("Ready!"))
+      return AnyView(
+        Text("Ready!")
+          .font(.system(size: 60, weight: .bold, design: .default))
+          .foregroundColor(Color(white: 0.18, opacity: 1.0))
+      )
     }
     // Display the Color Labels
     return AnyView(VStack {
@@ -72,7 +89,11 @@ struct ContentView: View {
     })
   }
   
-  // Display the results
+  
+  
+  // -------------------------------------------------
+  // Display the results - shows check or x after an answer
+  
   func resultsDisplay() -> AnyView {
     // if game is over show the results
     // Now I remember why I have .over state and wins !!!!
@@ -89,22 +110,32 @@ struct ContentView: View {
     return AnyView(EmptyView())
   }
   
+  
+  
+  // ------------------------------------------------
   // Shows the buttons at the bottom
+  
   func buttonBlock() -> AnyView {
     // If game state .ready show Yes and No
-    if env.gameState == .ready {
+    if env.gameState == .playing {
       return AnyView(HStack(alignment: .bottom) {
         ButtonDisplay(str: "Yes")
         ButtonDisplay(str: "No")
       })
+    } else if env.gameState == .start {
+      // Otherwise show the Start button
+      return AnyView(HStack(alignment: .bottom) {
+        ButtonDisplay(str: "Start")
+      })
     }
     
-    // Otherwise show the Start button
-    return AnyView(HStack(alignment: .bottom) {
-      ButtonDisplay(str: "Start")
-    })
+    return AnyView(EmptyView())
   }
   
+  
+  
+  // ------------------------------------------------
+  // Helper generates a button with a label and action
   
   func ButtonDisplay(str: String) -> AnyView {
     return AnyView(
@@ -121,6 +152,10 @@ struct ContentView: View {
     )
   }
   
+  
+  
+  // ----------------------------------------------
+  // Helper displays the color label
   
   func TextDisplay(str: String, color: Color = Color.black) -> AnyView {
     return AnyView(
@@ -140,12 +175,17 @@ struct ContentView: View {
 }
 
 
+
+// -------------------------------------------------------
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView().environmentObject(GameController())
   }
 }
 
+
+// -------------------------------------------------------
+// Helper to get the screen dimensions
 
 extension UIScreen {
    static let screenWidth = UIScreen.main.bounds.size.width

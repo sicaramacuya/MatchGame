@@ -30,8 +30,14 @@ import Foundation
        On Timer
        set GameState.playing
  
+ 
+ TODO: This is a pretty confusing game check that it's getting the answers right!
+ TODO: The center block shifts down when the buttons are removed
+ TODO: Time might be better as 00:0 or 00:00 this means the timer needs to run 0.01
+ TODO: Buttons are only active when you tap the text, make the tapable area larger
+ TODO: Need a way to exit game. Add another button? Add a play again button?
+ 
  */
-
 
 
 // Game Controller
@@ -54,7 +60,6 @@ class GameController: ObservableObject {
     
   }
   
-  
   // Handles taps on buttons
   // Use the button label to decide what to do
   // TODO: Needs some work...
@@ -62,8 +67,7 @@ class GameController: ObservableObject {
     switch gameState {
     // Start Button
     case .start: // Start button
-      gameState = .ready // Chaning the state displays the labels and Yes/No Buttons
-      chooseColors()     // Choose some random colors
+      startGame()
       
     // Ready - Thinking about using this for a countdown before starting
     // For now we'll check your answer
@@ -83,6 +87,21 @@ class GameController: ObservableObject {
   }
   
   
+  // Call this to start a game - A game in this case is one match
+  func startGame() {
+    chooseColors()
+    gameState = .playing
+    startTimer()
+  }
+  
+  
+  func gameOver() {
+    gameState = .over
+    stopTimer()
+    startGameOverTimer()
+  }
+  
+  
   // Check your answer - Pass it the label. Button labels should probably be an enum
   func checkAnswer(answer: String) {
     // If colorA and colorC match your answer should be Yes!
@@ -94,12 +113,16 @@ class GameController: ObservableObject {
       streak += 1   // Up the streak
     } else {
       // Got it wrong
+      wins = false
       score -= 100  // lose some points
       streak = 0    // reset that streak
     }
     // Select some new colors
     // TODO: go to the ready state, start a count down or delay before shwoing the next colors
-    chooseColors()
+//    chooseColors()
+    
+    gameOver()
+    
   }
   
   // Set the color variables to star a game
@@ -129,8 +152,14 @@ class GameController: ObservableObject {
     // Might need to drop the timer and use a frame loop. Use delta time to calculate the time
   }
   
+  func startGameOverTimer() {
+    timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (timer) in
+      self.startGame()
+    })
+  }
+  
   // Clears the time
-  func resetTimer() {
+  func stopTimer() {
     timer?.invalidate()
   }
 
@@ -143,6 +172,6 @@ class GameController: ObservableObject {
   // Format the time to display in the UI
   func formatTime() {
     // TODO: Need to pad with 0
-    seconds = "\(ms / 10):0\(ms % 10)"
+    seconds = "\(ms / 10):\(ms % 10)"
   }
 }
