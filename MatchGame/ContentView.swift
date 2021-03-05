@@ -83,7 +83,7 @@ struct ContentView: View {
     // Display the Color Labels
     return AnyView(VStack {
       // Top label colorA, color ColorA
-      TextDisplay(str: env.colorA.toString(), color: Color(env.colorA.toUIColor()))
+      TextDisplay(str: env.colorA.toString(), color: Color(env.colorD.toUIColor()))
       // Bottom label colorB, color * colorC *
       TextDisplay(str: env.colorB.toString(), color: Color(env.colorC.toUIColor()))
     })
@@ -118,8 +118,9 @@ struct ContentView: View {
   func buttonBlock() -> AnyView {
     // If game state .ready show Yes and No
     if env.gameState == .playing {
-      return AnyView(HStack(alignment: .bottom) {
+      return AnyView( HStack(alignment: .bottom) {
         ButtonDisplay(str: "Yes")
+        ButtonDisplay(str: "Restart")
         ButtonDisplay(str: "No")
       })
     } else if env.gameState == .start {
@@ -127,7 +128,12 @@ struct ContentView: View {
       return AnyView(HStack(alignment: .bottom) {
         ButtonDisplay(str: "Start")
       })
-    }
+    } else if env.gameState == .stats {
+        // Otherwise show the Start button
+        return AnyView(HStack(alignment: .bottom) {
+          ButtonDisplay(str: "Play Again!")
+        })
+      }
     
     return AnyView(EmptyView())
   }

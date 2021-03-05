@@ -46,7 +46,8 @@ import Foundation
 // Game Controller
 class GameController: ObservableObject {
   // These variables are shared with the view
-  @Published var colorA: GameColor = .Blue     // Color of the top text and text label
+  @Published var colorA: GameColor = .Blue     // Text color of the top text label
+  @Published var colorD: GameColor = .Purple   // COlor of the top label
   @Published var colorB: GameColor = .Orange   // Text label on the bottom label
   @Published var colorC: GameColor = .Red      // Color of the bottom label
   @Published var seconds: String = "00:00"     // TODO: update and format the time
@@ -85,7 +86,10 @@ class GameController: ObservableObject {
     // Game Over - Maybe we don't need this, can set the state to .start and show
     // the start button again?
     case .over:
-      gameState = .playing
+      gameState = .start
+        
+    case .stats:
+        checkAnswer(answer: label)
     }
   }
   
@@ -94,15 +98,22 @@ class GameController: ObservableObject {
   func startGame() {
     chooseColors()
     gameState = .playing
+    stopTimer()
     startTimer()
+//    startGameOverTimer()
   }
   
   
   func gameOver() {
-    gameState = .over
+    gameState = .over //.over
     stopTimer()
     startGameOverTimer()
   }
+    
+    func displayStats() {
+        gameState = .stats
+        stopTimer()
+    }
   
   
   // Check your answer - Pass it the label. Button labels should probably be an enum
@@ -114,16 +125,28 @@ class GameController: ObservableObject {
       wins = true   // Still not using this...
       score += 100  // Add some points
       streak += 1   // Up the streak
+      gameOver()
+    } else if (answer == "Restart") {
+        score = 500
+        streak = 0
+        ms = 0
+        startGame()
+    } else if (answer == "Play Again!") {
+        score = 500
+        streak = 0
+        ms = 0
+        startGame()
     } else {
       // Got it wrong
       wins = false
       score -= 100  // lose some points
       streak = 0    // reset that streak
+      gameOver()
     }
     // Select some new colors
     // TODO: go to the ready state, start a count down or delay before showing the next colors
     
-    gameOver()
+//    gameOver()
     
   }
   
@@ -131,6 +154,7 @@ class GameController: ObservableObject {
   func chooseColors() {
     // Choose three colors at random
     colorA = randomColor()
+    colorD = randomColor()
     colorB = randomColor()
     colorC = randomColor()
     // The frequency of colors that match will 1 in 6. We might want this to me more like 1 / 2?
@@ -150,7 +174,7 @@ class GameController: ObservableObject {
     timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { (timer) in
       self.updateTimer()
     })
-    ms = 0 // reset the ms count
+    
     // Might need to drop the timer and use a frame loop. Use delta time to calculate the time
   }
   
@@ -175,5 +199,10 @@ class GameController: ObservableObject {
   func formatTime() {
     // TODO: Need to pad with 0
     seconds = "\(ms / 10):\(ms % 10)"
+    
+    // When 30 seconds has pass.
+    if ms == Int("600") {
+        displayStats()
+    }
   }
 }

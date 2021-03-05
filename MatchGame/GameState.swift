@@ -13,4 +13,5 @@ enum GameState {
   case playing
   case over
   case start
+  case stats
 }
